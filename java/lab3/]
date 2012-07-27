@@ -1,0 +1,31 @@
+import org.junit.*;
+import static org.junit.Assert.*;
+import org.junit.runner.Result;
+import static org.junit.runner.JUnitCore.runClasses;
+import java.util.*;
+import java.io.*;
+
+public class SequenceTest 
+{
+	public static void main (String[] args)
+	{
+		Result res = runClasses(SequenceTest.class);
+		System.out.println("Test run = "+ res.getRunCount() + "\nTest failed = "+
+				    res.getFailures());
+	}
+	
+	protected Sequence seq;
+
+	@Before
+	public void runBeforeEveryTest()
+	{
+		seq = new Sequence();
+	}
+	
+	@Test
+	public void testSize()
+	{
+		assertEquals (10, seq.size());
+	} 
+
+} 

@@ -1,0 +1,60 @@
+/**********************************************
+*  CS401 Lab Assignment 8                     *
+*  File : BinarySearchTreeTest.java           *
+*         Test file to test Array based       * 
+*         implementation of Binary serach     *
+*         tree                                *
+*  Auther: Anand Singh                        *
+*  CWID  : A20280101                          *
+*  Email : asingh83@hawk.iit.edu              *
+*  Date  : 28-Mar-2012                        *
+***********************************************/
+
+public class BinarySearchTreeTest 
+{
+	public static void main (String[] args)
+	{
+		new BinarySearchTreeTest().run();
+	}
+
+	public void run ()
+	{
+		BinarySearchTreeArray<String> STree = new BinarySearchTreeArray<String> ();
+		BinarySearchTreeArray<Integer> ITree = new BinarySearchTreeArray<Integer> ();
+
+		STree.add("dog");
+		STree.add("turtel");
+		STree.add("cat");
+		STree.add("ferret");
+		STree.add("shark");
+		STree.add("whale");
+		STree.add("porpoise");
+
+		System.out.println("\n\tContents of First Binary Tree");		
+		STree.printTree();		
+		STree.remove("ferret");
+		System.out.println("\n\tContents of First Binary Tree after Removing \"ferret\" from tree");
+		STree.printTree();		
+
+		ITree.add(3);
+		ITree.add(18);
+		ITree.add(4);
+		ITree.add(99);
+		ITree.add(50);
+		ITree.add(23);
+		ITree.add(5);
+		ITree.add(101);
+		ITree.add(77);
+		ITree.add(87);
+
+
+		System.out.println("Contents of Second Binary Tree");		
+		ITree.printTree();	
+		ITree.remove(50);	
+		System.out.println("\n\tContents of Second Binary Tree after Removing \"50\" from tree");
+		ITree.printTree();		
+
+
+	}
+
+}

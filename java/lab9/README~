@@ -1,0 +1,54 @@
+***********************************************
+*    CS401 Lab 9 Assignment                   *
+*                                             *
+*  Auther: Anand Singh                        *
+*  CWID  : A20280101                          *
+*  Email : asingh83@hawk.iit.edu              *
+*  Date  : 7-Apr-2012                         *
+***********************************************
+
+1. Do Lab 21 on page 566 of your book.
+
+Assignment Files: 
+
+	ByName.java
+	Student.java
+	CS401PriorityQueue.java
+	CS401FairPQ.java
+	CS401FairPQTest.java
+	FairPQExample.java
+
+Compile: 
+
+$ javac ByName.java
+$ javac Student.java
+$ javac CS401PriorityQueue.java
+$ javac CS401FairPQ.java
+$ javac CS401FairPQTest.java
+$ javac FairPQExample.java
+
+Run:
+
+$ java FairPQExample
+
+
+Note:
+
+This programs takes the user input for student name and gpa seperated by space.
+It form two seperate queue one based on order of GPA and another one based on alphabetical order of names 
+Then it prints the queue element as it's stored in queue (in increasing oreder of queue index).
+Later it removes one by one element in each queue and prints the removed element.
+
+
+To check the fairness following input can provided to this program
+
+Som 3.4
+Navdeep 3.5
+Viet 3.5
+Navdeep 3.4
+Rahul 5.7
+Anand 2.1
+Som 3.4
+
+
+

@@ -1,0 +1,18 @@
+There are three assignments.
+
+1. Do Lab 17 on page 430 of your book.
+
+2. Do Programming Project 10.1 on page 449 of your book.
+As test vectors, use the following:
+    - dog, turtle, cat, ferret, shark, whale, porpoise
+    - 3, 18, 4, 99, 50, 23, 5, 101, 77, 87
+Create a binary search tree for each of the above vectors and print out the array representation in form of a table as shown on page 450 of your book.  You may assume that each element in the vector is inserted in the ordinal value shown (i.e., for the first vector, "dog" is inserted first, followed by "turtle", followed by "cat", and so on).
+
+Then, 
+  - From the first list delete "ferret" and print out the resulting the array representation in form of a table as shown on page 450 of your book.
+  - From the second list delete "50" and print out the resulting the array representation in form of a table as shown on page 450 of your book.
+
+3. Do Programming Exercise 10.4 on page 448.  Use the source code from "Blackboard -> Course Documents -> Lecture 9 Programs" and add your recursive add method in BinarySearchTree.java.  Run the tests in BinarySearchTreeTest.java to make sure that your recursive add method works as expected.
+
+Due date: 
+  - ALL SECTIONS: Thu, March 29, 2012 Midnight CHICAGO time 

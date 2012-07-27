@@ -1,0 +1,232 @@
+/**********************************************
+*  CS401 Lab Assignment 7                     *
+*  File : CarWash.java                        *
+*         Assignment for programming          *
+*         project 8.1, page-369               *
+*  Auther: Anand Singh                        *
+*  CWID  : A20280101                          *
+*  Email : asingh83@hawk.iit.edu              *
+*  Date  : 8-Mar-2012                        *
+***********************************************/
+import java.util.*;
+
+public class CarWash
+{
+     public final static String OVERFLOW = " (Overflow)\n";
+     
+     public final static String HEADING =
+          "\n\nTime\tEvent\t\tWaiting Time\n";
+
+
+
+     public final static int MAX_SIZE = 5; // maximum cars allowed in carQueue
+
+
+
+     protected Queue<Car> carQueue;  
+
+     protected LinkedList<String> results;  // the sequence of events in the simulation
+
+     protected int  meanArrivalTime,
+	            meanServiceTime,
+		    maxArrivalTime,
+	     	    nextArrivalTime,
+		    currentTime,
+                    nextDepartureTime,    // when car being washed will finish
+                    numberOfCars,
+                    waitingTime,
+                    sumOfWaitingTimes,
+		    overflowCount,
+		    totalArrivedCars;
+
+	protected Random random;
+	
+	protected static int RANDOM_SEED = 100;
+
+    /**
+     *  Initializes this CarWash object.
+     *
+     */
+     //public CarWash()
+     public CarWash(int meanArrivalTime, int meanServiceTime, int maxArrivalTime)
+     {
+         carQueue = new LinkedList<Car>();
+         results = new LinkedList<String>();
+
+	 random = new Random(RANDOM_SEED);
+         results.add (HEADING);
+
+	 this.meanArrivalTime = meanArrivalTime;
+	 this.meanServiceTime = meanServiceTime;
+	 this.maxArrivalTime = maxArrivalTime;
+
+	 this.nextArrivalTime = getArrivalTime();
+         currentTime = 0;
+         numberOfCars = 0;
+         waitingTime = 0;
+         sumOfWaitingTimes = 0;
+         nextDepartureTime = maxArrivalTime;   // no car being washed
+     } // constructor
+
+     
+     protected int getArrivalTime()
+     {
+           double rand = random.nextDouble();
+           return nextArrivalTime + (int)Math.round ((-meanArrivalTime*Math.log (1 - rand)));
+     } // getTime
+     
+     protected int getServiceTime()
+     {
+	     double rand = random.nextDouble();
+             return (int)Math.round ((-meanServiceTime*Math.log (1 - rand)));
+     }
+     
+     public void Process()
+     {
+	while(nextArrivalTime < maxArrivalTime/*(nextArrivalTime+nextDepartureTime)*/)
+	{
+		totalArrivedCars++;
+		processNextCar(nextArrivalTime);
+		nextArrivalTime = getArrivalTime();
+
+	}
+	finishUp();
+     }
+    /**
+     *  Handles all events from the current time up through the specified 
+     *  time for the next arrival.
+     *
+     *  @param nextArrivalTime - the specified time when the next arrival 
+     *                           will occur.
+     *
+     *  @throws IllegalArgumentException - if nextArrivalTime is less than 
+     *                                     the current time.
+     *
+     */
+     public LinkedList<String> processNextCar (int nextArrivalTime)
+     {
+         final String BAD_TIME =
+             "The time of the next arrival cannot be less than the current time.";
+
+         if (nextArrivalTime < currentTime)
+              throw new IllegalArgumentException (BAD_TIME);
+         while (nextArrivalTime >= nextDepartureTime)
+              processDeparture();
+         return processArrival (nextArrivalTime);
+     } // process
+
+
+    /**
+     *  Moves the just arrived car into the car wash (if there is room on 
+     *  the car queue), or turns the car away (if there is no room on the 
+     *  car queue).
+     *
+     *  @param nextArrivalTime - the arrival time of the just-arrived car.
+     *
+     */
+     protected LinkedList<String> processArrival (int nextArrivalTime)
+     {        
+         final String ARRIVAL = "\tArrival";
+
+         currentTime = nextArrivalTime;         
+         if (carQueue.size() == MAX_SIZE)        
+	 { 
+             results.add (Integer.toString (currentTime) + ARRIVAL + OVERFLOW);
+	     overflowCount++;
+	 }
+         else
+         {
+              results.add (Integer.toString (currentTime) + ARRIVAL);
+              numberOfCars++;
+              if (nextDepartureTime == maxArrivalTime)  // if no car is being washed
+                  nextDepartureTime = currentTime + getServiceTime();
+              else
+                  carQueue.add (new Car (nextArrivalTime));
+              results.add ("\n");
+         } // not an overflow
+         return results;
+     } // method processArrival
+
+
+    /**
+     *  Updates the simulation to reflect the fact that a car has finished 
+     *  getting washed.
+     *
+     */
+     protected LinkedList<String> processDeparture()
+     {
+         final String DEPARTURE = "\tDeparture\t\t";
+
+         int arrivalTime;
+
+         currentTime = nextDepartureTime;
+         results.add (Integer.toString (currentTime) + DEPARTURE +
+                         Integer.toString (waitingTime) + "\n");
+         if (!carQueue.isEmpty())
+         {
+              Car car = carQueue.remove();
+              arrivalTime = car.getArrivalTime();
+              waitingTime = currentTime - arrivalTime;
+              sumOfWaitingTimes += waitingTime;
+              nextDepartureTime = currentTime + getServiceTime();
+	      
+         } // carQueue was not empty
+         else
+         {
+              waitingTime = 0;
+              nextDepartureTime = maxArrivalTime;  // no car is being washed
+         } // carQueue was empty
+         return results;
+     } // method processDeparture
+
+    /**
+     *  Washes all cars that are still unwashed after the final arrival.
+     *
+     */
+     public LinkedList<String> finishUp()
+     {
+         //while (nextDepartureTime < maxArrivalTime)  // while there are unwashed cars
+         while (!carQueue.isEmpty())  // while there are unwashed cars
+               processDeparture();
+         return results;
+     } // finishUp
+
+
+    /**
+     *  Returns the history of this CarWash object's arrivals and 
+     *  departures, and the average waiting time.
+     *
+     *  @return the history of the simulation, including the average 
+     *   waiting time.
+     *
+     */
+     public LinkedList<String> getResults()
+     {
+         final String NO_CARS_MESSAGE = "There were no cars in the car wash.\n";
+
+         final String AVERAGE_WAITING_TIME_MESSAGE =
+             "\n\nThe average waiting time was ";
+	
+	 final String AVERAGE_QUEUE_MESSAGE =
+		 "\n\nThe average queue length was ";
+
+	 final String OVERFLOW_MESSAGE =
+		 "\n\nThe number of overflows was ";
+
+         if (numberOfCars == 0)
+              results.add (NO_CARS_MESSAGE);
+         else
+	 {
+             	results.add (AVERAGE_WAITING_TIME_MESSAGE + Double.toString (
+                          Math.round(( (double) sumOfWaitingTimes / numberOfCars) * 10 ) / 10.0) + " minutes per car.");
+		
+             	results.add (AVERAGE_QUEUE_MESSAGE + Double.toString (
+                          Math.round(( (double) sumOfWaitingTimes / nextDepartureTime) * 10 ) / 10.0) + " cars per minute.");
+	 
+	 	results.add(OVERFLOW_MESSAGE + overflowCount + ".");
+
+	 }
+         return results;
+     } // method getResults
+
+} // class CarWash

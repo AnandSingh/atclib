@@ -1,0 +1,94 @@
+***********************************************
+*    CS401 Lab 11 Assignment                  *
+*                                             *
+*  Auther: Anand Singh                        *
+*  CWID  : A20280101                          *
+*  Email : asingh83@hawk.iit.edu              *
+*  Date  : 13-Apr-2012                        *
+***********************************************
+
+Assignment Files: 
+
+	SortTimer.java         => used to determine the run time for Insertion, Bubble and Selction Sort
+	QuickSortTimer.java    => used to determine the run time for Quick Sort
+	HeapSortTimer.java     => used to determine the run time for Heap Sort
+	MergeSortTimer.java    => used to determine the run time for Merge Sort
+
+	Sorts.java	=> Methods defination for Insertion, Bubble and Selection sort
+	HeapSort.java	=> Methods defination for Heap Sort
+	QuickSort.java	=> Methods defination for Quick Sort
+	MergeSort.java	=> Methods defination for Merge Sort
+
+
+1. 
+
+For value of n = 22001, Insertion sort gives atleast for 1 sec.
+Here are the run time for the value of n - 22001
+
+ ------------------ ------------------- -----------------
+|  Sort Method     |    run-time (sec) |  run-time (sec) |
+|                  |    n = 22001      |  n = 44002      |
+ ------------------ ------------------- -----------------
+|  Insertion Sort  |   1.014098258     |  3.436444774    |
+ ------------------ ------------------- -----------------
+|   Bubble Sort    |   3.078872144     |  13.326499681   |
+ ------------------ ------------------- -----------------
+|  Selection Sort  |   1.114510894     |  4.668069043    |
+ ------------------ ------------------- -----------------
+
+
+2. Then re-run for each fast (that is, Quick Sort, Merge Sort, Heap Sort) sort method with a value for n such that:
+
+a. only the leftmost digit in n is non-zero (for example, n = 30000);
+
+b. when n is doubled, none of the fast sorts runs out of memory;
+
+c. when is quadrupled, at least one of the fast sorts runs out of memory.
+
+Result:
+
+For value n = 20,000,000 merge sort runs out of memory
+For value n = 10,000,000 none of the sorts runs out of memory
+So the value of n which is base line for determing the run time of sorts method are 5,000,000
+
+ ------------------ ------------------- ------------------ ------------------
+|  Sort Method     |    run-time (sec) |  run-time (sec)  |  run-time (sec)  |
+|                  |    n = 5,000,0000 |  2n = 10,000,000 |  4n = 20,000,000 |
+ ------------------ ------------------- ------------------ ------------------
+|   Quick Sort     |    5.263673821    |   28.580150966   |   81.825435944   |
+ ------------------ ------------------- ------------------ ------------------
+|   Merge Sort     |    3.479525492    |   16.67762876    |   99.662837756   |
+ ------------------ ------------------- ------------------ ------------------
+|   Heap Sort      |    8.735839925    |   37.111135018   |    OutOfMemory   |
+ ------------------ ------------------- ------------------ ------------------
+
+
+Below is the ranknig of the sorts methods 
+
+1. Insertion Sort
+2. Selection Sort
+3. Bubble Sort
+
+In Fast Sort Method below is the ranking
+
+1. Merge Sort
+2. Quick Sort
+3. Heap Sort
+
+Below is the data for various value of n
+ .
+Value of n  Merge Sort  Quick Sort  Heap Sort
+
+    30000    0.01513     0.00953     0.07276
+    50000    0.01811     0.01704     0.01452
+   100000    0.04323     0.03727     0.03176
+   500000    0.48337     0.23826     0.22232
+  1000000    1.12086     0.51891     0.50860
+  2000000    2.88190     1.53277     1.15722 
+  8000000   26.89014    21.59672     6.79702
+ 10000000   37.11113    28.58015    16.67762
+ 20000000   99.66283    81.82543    31.02549
+
+
+For values of n greater then 50000, Heap sort shows better results, Otherwise quick sort is the fastest sort 
+

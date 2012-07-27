@@ -1,0 +1,58 @@
+***********************************************
+*    CS401 Lab 10 Assignment                   *
+*                                             *
+*  Auther: Anand Singh                        *
+*  CWID  : A20280101                          *
+*  Email : asingh83@hawk.iit.edu              *
+*  Date  : 13-Apr-2012                         *
+***********************************************
+
+1. Do programming project 11.1 on page 497 of your book
+(a) Do NOT use the sort() methods in Java Arrays;
+(b) Develop the code for the sort methods as discussed during the lecture and in the book;
+(c) Perform the sort using three algorithms: Selection sort, Insertion sort, and Bubble Sort.
+(d) Use the "natural" ordering of the object being sorted (i.e., have the object being sorted extend the Comparable interface and sort according to instructions given on page 497);
+(e) Use the test data given in the book on page 498; you may add more rows to your test data if you want.
+
+
+Assignment Files: 
+
+	Lab10SortPerson.java 
+	FileOp.java 
+	ComparePersonFile.java
+
+Compile: 
+
+$ javac Lab10SortPerson.java
+$ javac FileOp.java
+$ javac ComparePersonFile.java
+
+Run:
+
+$ java Lab10SortPerson
+
+
+Optional File: 
+
+	GenerateRandomPersonFile.java
+	This is used to genaret an random number of secrity number to be tested with main programs	
+	
+
+Note:
+
+This programs takes the user input for file path. The file should conatins as per below specification 
+Last_Name<space>First_Name<space>Middle_name<space>Security_NUMBER
+
+e.g.
+
+  Johnson Kevin Michael 222222222
+  Johnson Kevin Michael 555555555
+  Kiriyeva Marina Alice 333333333
+
+*** For testing "person.dat" file can be used which has the test data as per the book. 
+*** For testing "p.dat" can be used which is sgernarted via GenerateRandomPersonFile.java
+
+  
+
+
+

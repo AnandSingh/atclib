@@ -1,0 +1,163 @@
+import java.util.*;
+
+public class Simulator 
+{
+	protected static final int SEED = 100;
+  
+   	protected Random random;
+  
+   	protected int meanArrivalTime,
+		      meanServiceTime,
+              	      maxArrivalTime;
+  
+   	protected boolean firstLine;
+  
+ 	/*
+  	 * Initializes this Simulator object.
+  	*/  
+   	public Simulator () 
+   	{  
+      		random = new Random (SEED);
+      		firstLine = true;
+	} // constructor
+
+
+	public static void main (String[] args)
+	{
+		new Simulator().run();
+	} // method main
+
+
+	public void run()
+	{
+  		final String INPUT_PROMPT =
+    			"\n\nPlease enter three positive integers \n(" +
+    			"the mean time between arrivals, the mean serive time and the maximum arrival time): ";
+
+    		final String NEXT_ARRIVAL_MESSAGE =
+      			"\n\nThe next arrival time is ";
+		final String SERVICE_TIME_MESSAGE =
+			"\n\nThe Service time is ";
+    
+    		final String CONTINUE_PROMPT =
+      			"\nType A for the next arrival time:"+
+			"\nOr"+
+			"\nType S for the service time:"+
+			"\nOr"+
+			"\nType Q to quit.";
+    
+    		final String LATE_ARRIVAL_MESSAGE = "\nThe next arrival time, ";
+    
+    		final String AFTER_MAX_TIME_MESSAGE =
+      			", is beyond the maximum arrival time, ";
+  
+  		int currentTime = 0;
+  
+  		boolean firstLine = true;
+    
+    		Scanner sc = new Scanner (System.in);
+
+    		int timeTillNextArrival;
+
+		int serviceTime;
+        		
+      		System.out.print (INPUT_PROMPT);
+      		String line = sc.nextLine();
+		
+      		while (true)
+		{
+        		if (firstLine)
+          			if (parseOK (line)) 
+        			{  
+          				firstLine = false;
+          				System.out.println (CONTINUE_PROMPT); 
+        			} // first line of input is legal
+        			else
+        			{  
+          				System.out.print (INPUT_PROMPT);
+          				line = sc.nextLine();
+        			} // error on first line
+        		else 
+        		{  
+          			String userInput = sc.nextLine();
+				if(0 == userInput.compareToIgnoreCase("A"))
+				{
+      		    			timeTillNextArrival = getTime();
+          				currentTime += timeTillNextArrival;
+          				if (currentTime <= maxArrivalTime)
+            					System.out.println (NEXT_ARRIVAL_MESSAGE + 
+									    currentTime + CONTINUE_PROMPT);
+          				else 
+          				{  
+            					System.out.println (LATE_ARRIVAL_MESSAGE + 
+									currentTime + AFTER_MAX_TIME_MESSAGE + 
+									maxArrivalTime);
+            					//	break;
+          				} // last line of input entered
+				}
+				else if(0 == userInput.compareToIgnoreCase("S"))
+				{
+					serviceTime = getServiceTime();
+					System.out.println(SERVICE_TIME_MESSAGE +
+							serviceTime + CONTINUE_PROMPT);
+				}else if(0 == userInput.compareToIgnoreCase("Q"))
+				{
+					System.out.println("\nBye Bye !!\n");
+					break;
+				}
+				else {
+					System.out.println("\nERROR !! Enter either 'A' , 'S' or 'Q' \n");
+				}
+        		} // input values accepted
+      		}//while    		
+  	} // method run
+  
+  
+  	/**
+  	 * Ensures that the string entered contains two integers separated
+  	 * by a space.
+  	 * 
+  	 * @param s a String that was entered to be checked.
+  	 * 
+  	 * @return a boolean indicating if the line entered is OK.
+  	 */
+  	public boolean parseOK (String s) 
+  	{  
+    		final String THREE_INTEGERS_NEEDED =
+      			"\nThe input should contain three integers separated by a space.";
+        		
+		Scanner lineScanner = new Scanner (s);
+    		try 
+    		{      		
+      			meanArrivalTime = lineScanner.nextInt();
+			meanServiceTime = lineScanner.nextInt();
+      			maxArrivalTime = lineScanner.nextInt();
+      			return true; 
+    		} // try
+    		catch (Exception e) 
+    		{  
+      			System.out.print (e + THREE_INTEGERS_NEEDED);	
+    		} // catch Exception    		
+    		return false;
+  	} // method parseInt
+  
+	protected int getServiceTime()
+	{
+		double randomNum = random.nextDouble();
+		return (int)Math.round ((-meanServiceTime*Math.log(1 - randomNum)));
+	}
+  
+  	/**
+  	 * Calculates the time till the next arrival, based on meanArrivalTime.
+  	 * 
+  	 * @return an int containing the next arrival time.
+  	 */
+  	protected int getTime() 
+  	{  
+    		double randomDouble = random.nextDouble();
+    
+    		return (int)Math.round ((-meanArrivalTime*Math.log (1 - randomDouble))); 
+  	} // getTime
+  
+} // class Simulator
+
